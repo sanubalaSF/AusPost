@@ -1,0 +1,17 @@
+public class ClosedCaseHelper {
+    public static void closedCase(List<Case>caseList,Map<Id,Case>oldCase){
+        for (Case caseRec : caseList) {
+           Case oldRec = oldCase.get(caseRec.Id);
+            Boolean oldCaseStatus = oldRec.Status.equals('Closed');
+            Boolean newCaseStatus = caseRec.Status.equals('Closed');
+            if (!oldCaseStatus && newCaseStatus) {
+                system.debug('oldCaseStatus'+oldRec.Status);
+                system.debug('newCaseStatus'+caseRec.Status);
+                string userId = UserInfo.getUserId();
+                string caseId = caseRec.Id;
+                string agentId = userId;
+                CaseClosedCallout.sendDataService(caseId,agentId);
+            }
+		}
+    }
+}

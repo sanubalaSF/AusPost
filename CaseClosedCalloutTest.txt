@@ -1,0 +1,11 @@
+@istest
+public class CaseClosedCalloutTest {
+	public static testmethod void testCaseClosedCallout() {
+        SingleRequestMock fakeResponse = new SingleRequestMock(200,
+                                                 'Complete',
+                                                 '[{"id": "5002w000007C4Q0","agentid":"0052w000004EQIa"}]',
+                                                 null);
+        Test.setMock(HttpCalloutMock.class, fakeResponse);
+        CaseClosedCallout.sendDataService('5002w000007C4Q0','0052w000004EQIa');
+    }
+}

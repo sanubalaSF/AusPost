@@ -1,0 +1,6 @@
+/* Author: Vinod
+ * Description: passing the caseId and the agent Id to the callout method
+ * */
+trigger ClosedCase on Case (before update) {
+  ClosedCaseHelper.closedCase(Trigger.new, Trigger.oldMap);
+}

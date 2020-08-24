@@ -1,0 +1,34 @@
+/*Author: Vinod
+ *Callout for Closed Case
+ * Description: once the case is closed need to Send the caseId and agentId to the External system,
+ * As didnt mentioned the format which they are using assuming it is a json format as of now
+*/
+
+public class CaseClosedCallout{
+    @future (callout =true)
+    public static void sendDataService(String caseId, String agentId){
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('https://nfapihub.herokuapp.com/'); 
+        request.setMethod('POST');
+        request.setHeader('Accept', 'application/json');
+        request.setHeader('Content-Type', 'application/json;charset=UTF-8;text/html');
+        request.setBody('{"id":"caseId","agentid":"agentId"}');
+        HttpResponse response = http.send(request);
+        try{
+            if (response.getStatusCode() == 200) {
+                System.debug('The status code was returned successfully: ' +
+                    response.getStatusCode() + ' ' + response.getStatus());
+                System.debug(response.getBody());
+            }
+            else if (response.getStatusCode() != 201) {
+                System.debug('The status code returned was not expected: ' +
+                    response.getStatusCode() + ' ' + response.getStatus());
+            } 
+    	}
+        Catch(Exception Ex){
+            //If there is any Error Log object we will get the record there else we can check in debug logs            
+            System.debug(response.getBody());
+        }
+    }
+}
